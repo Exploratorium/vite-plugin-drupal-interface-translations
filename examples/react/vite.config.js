@@ -1,12 +1,9 @@
-import { join } from 'node:path';
-
-import { defineConfig,  } from 'vite'
+import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import vitePluginDrupalInterfaceTranslations from '../../index';
+import vitePluginDrupalInterfaceTranslations from 'vite-plugin-react-drupal-interface-translations'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  name: 'foo',
   plugins: [
     react(),
     vitePluginDrupalInterfaceTranslations(),
