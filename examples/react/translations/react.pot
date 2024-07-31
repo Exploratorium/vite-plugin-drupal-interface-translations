@@ -1,0 +1,9 @@
+#: js/src/App.jsx:16:60
+msgid "React logo"
+msgstr ""
+
+#: js/src/App.jsx:22:12
+msgid "counted @count time"
+msgid_plural "counted @count times"
+msgstr[0] ""
+msgstr[1] ""
