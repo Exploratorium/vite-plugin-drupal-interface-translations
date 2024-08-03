@@ -7,7 +7,7 @@ that are used in [Drupal](https://www.drupal.org) websites.
 ## Installation
 
 ```shell
-npm install --save-dev vite-plugin-drupal-interface-translations
+npm install --save-dev rollup-plugin-drupal-interface-translations
 ```
 
 ## Usage

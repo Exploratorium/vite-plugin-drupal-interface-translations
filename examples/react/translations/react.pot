@@ -1,3 +1,7 @@
+#: js/src/App.jsx:13:53
+msgid "Vite logo"
+msgstr ""
+
 #: js/src/App.jsx:16:60
 msgid "React logo"
 msgstr ""

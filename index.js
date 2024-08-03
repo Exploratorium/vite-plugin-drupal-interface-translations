@@ -84,7 +84,7 @@ function addLoc(msg, expression, code) {
   msg.references.push(reference);
 }
 
-const vitePluginDrupalInterfaceTranslations = (options = {}) => {
+const rollupPluginDrupalInterfaceTranslations = (options = {}) => {
   // eslint-disable-next-line no-undef
   const cwd = process.cwd();
 
@@ -137,7 +137,7 @@ const vitePluginDrupalInterfaceTranslations = (options = {}) => {
   const UNCHANGED = null;
 
   return {
-    name: 'vite-plugin-drupal-interface-translations',
+    name: 'rollup-plugin-drupal-interface-translations',
     enforce: 'post',
     transform(code, id) {
       if (!filter(id)) return UNCHANGED;
@@ -204,4 +204,4 @@ const vitePluginDrupalInterfaceTranslations = (options = {}) => {
   };
 };
 
-export default vitePluginDrupalInterfaceTranslations;
+export default rollupPluginDrupalInterfaceTranslations;

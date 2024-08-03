@@ -1,9 +1,11 @@
 module.exports = {
   root: true,
   env: { browser: true, es2020: true },
-  globals: [
-    'Drupal', 'drupalSettings', 'drupalTranslations',
-  ],
+  globals: {
+    Drupal: true,
+    drupalSettings: true,
+    drupalTranslations: true,
+  },
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',

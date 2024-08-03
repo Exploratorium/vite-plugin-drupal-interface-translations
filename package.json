@@ -1,8 +1,8 @@
 {
   "main": "index.js",
-  "name": "vite-plugin-drupal-interface-translations",
+  "name": "rollup-plugin-drupal-interface-translations",
   "private": false,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "license": "MIT",
   "scripts": {
