@@ -19,8 +19,17 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
+      - run: |
+          cd examples/react
+          npm install
+          cd -
+      - run: |
+          cd examples/vanilla
+          npm install
+          cd -
       - run: npm run lint
       - run: npm run test
+      - run: rm -rf ./examples/*/node_modules
 
   publish-npm:
     needs: build
