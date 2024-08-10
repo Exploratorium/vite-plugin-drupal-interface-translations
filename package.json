@@ -2,7 +2,7 @@
   "main": "index.js",
   "name": "rollup-plugin-drupal-interface-translations",
   "private": false,
-  "version": "1.0.3",
+  "version": "1.0.4",
   "type": "module",
   "license": "MIT",
   "scripts": {
