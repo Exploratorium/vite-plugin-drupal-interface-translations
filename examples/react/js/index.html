@@ -8,12 +8,12 @@
   </head>
   <body>
     <div id="root"></div>
-    <script language="JavaScript">
-      window.drupalSettings = {
-        pluralDelimiter: '\x03',
-      };
-    </script>
-    <script src="/drupal.js"></script>
+
+    <!-- From Drupal 10.3 -->
+    <script src="https://git.drupalcode.org/project/drupal/-/raw/10.3.x/core/misc/drupal.js"></script>
+    <script src="https://git.drupalcode.org/project/drupal/-/raw/10.3.x/core/misc/drupal.init.js"></script>
+    <script src="https://git.drupalcode.org/project/drupal/-/raw/10.3.x/core/misc/drupalSettingsLoader.js"></script>
+
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
