@@ -2,11 +2,11 @@
 msgid "Vite logo"
 msgstr ""
 
-#: js/src/App.jsx:16:60
+#: js/src/App.jsx:19:18
 msgid "React logo"
 msgstr ""
 
-#: js/src/App.jsx:22:12
+#: js/src/App.jsx:26:12
 msgid "counted @count time"
 msgid_plural "counted @count times"
 msgstr[0] ""

@@ -7,18 +7,18 @@ that are used in [Drupal](https://www.drupal.org) websites.
 ## Installation
 
 ```shell
-npm install --save-dev rollup-plugin-drupal-interface-translations
+npm install --save-dev vite-plugin-drupal-interface-translations
 ```
 
 ## Usage
 
 ```javascript
 import { defineConfig } from 'vite';
-import vitePluginDrupalSdcGenerator from 'vite-plugin-drupal-sdc-generator';
+import vitePluginDrupalInterfaceTranslations from 'vite-plugin-drupal-interface-translations';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vitePluginDrupalSdcGenerator()],
+  plugins: [vitePluginDrupalInterfaceTranslations()],
   root: 'js',
   build: {
     rollupOptions: {

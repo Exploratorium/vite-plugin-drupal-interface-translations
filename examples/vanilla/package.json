@@ -10,6 +10,6 @@
   },
   "devDependencies": {
     "vite": "^5.3.4",
-    "rollup-plugin-drupal-interface-translations": "../.."
+    "vite-plugin-drupal-interface-translations": "../.."
   }
 }

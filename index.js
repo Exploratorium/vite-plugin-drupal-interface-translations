@@ -84,7 +84,7 @@ function addLoc(msg, expression, code) {
   msg.references.push(reference);
 }
 
-const rollupPluginDrupalInterfaceTranslations = (options = {}) => {
+const vitePluginDrupalInterfaceTranslations = (options = {}) => {
   // eslint-disable-next-line no-undef
   const cwd = process.cwd();
 
@@ -204,4 +204,4 @@ const rollupPluginDrupalInterfaceTranslations = (options = {}) => {
   };
 };
 
-export default rollupPluginDrupalInterfaceTranslations;
+export default vitePluginDrupalInterfaceTranslations;

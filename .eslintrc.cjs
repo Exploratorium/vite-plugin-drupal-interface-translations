@@ -2,7 +2,6 @@ module.exports = {
   root: true,
   env: { es2020: true },
   extends: ['eslint:recommended', 'plugin:prettier/recommended'],
-  ignorePatterns: ['.eslintrc.cjs', 'components', 'node_modules'],
   globals: {
     Drupal: true,
   },
