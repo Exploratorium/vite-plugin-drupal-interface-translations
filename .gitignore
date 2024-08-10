@@ -38,3 +38,4 @@ node_modules
 
 # project
 /examples/**/*/package-lock.json
+dist
