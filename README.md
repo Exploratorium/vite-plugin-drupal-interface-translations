@@ -30,7 +30,15 @@ export default defineConfig({
 
 ## Options
 
-None yet.
+### output
+
+Type
+: `string`
+
+Default
+: `"translations.pot"`
+
+The ...
 
 ---
 
