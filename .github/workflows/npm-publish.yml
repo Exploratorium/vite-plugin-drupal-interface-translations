@@ -14,38 +14,53 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm ci
-      - run: |
+      - name: Install dependencies
+        run: npm ci
+      - name: Install React example dependencies
+        run: |
           cd examples/react
           npm install
           cd -
-      - run: |
+      - name: Install basic example dependencies
+        run: |
           cd examples/vanilla
           npm install
           cd -
-      - run: npm run lint
-      - run: npm run test
-      - run: rm -rf ./examples/*/node_modules
+      - name: Run lint tests
+        run: |
+          npm run lint
+          npm run test
+      - name: Clean up
+        run: rm -rf ./examples/*/node_modules
 
   publish-npm:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org/
-      - run: npm ci
-      - run: |
-          npm version patch
+      - name: Configure Git
+        run: |
           git config user.email "webmaster@exploratorium.edu"
           git config user.name "the Exploratorium"
+      - name: Install dependencies
+        run: npm ci
+      - name: Increment version
+        run: |
+          npm version patch
           git push --follow-tags
-      - run: npm publish
+      - name: Publish to NPM
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
