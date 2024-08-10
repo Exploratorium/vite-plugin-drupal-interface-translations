@@ -1,1 +1,7 @@
-examples/**/*/components
+/examples/**/*/components
+/examples/**/*/public
+
+dist
+node_modules
+
+*.yml

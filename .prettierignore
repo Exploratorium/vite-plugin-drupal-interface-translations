@@ -1,5 +1,7 @@
-dist/**/*
-node_modules/**/*
+/examples/**/*/components
+/examples/**/*/public
+
+dist
+node_modules
 
 *.yml
-public/**/*
