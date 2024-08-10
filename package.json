@@ -1,6 +1,34 @@
 {
   "main": "index.js",
   "name": "vite-plugin-drupal-interface-translations",
+  "author": {
+    "name": "the Exploratorium",
+    "email": "webmaster@exploratorium.edu",
+    "url": "https://www.exploratorium.edu"
+  },
+  "funding": [
+    {
+      "type": "individual",
+      "url": "https://www.exploratorium.edu/support/give"
+    },
+    {
+      "type": "individual",
+      "url": "https://www.exploratorium.edu/support/corporate-engagement"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Exploratorium/vite-plugin-drupal-interface-translations"
+  },
+  "bugs": {
+    "url": "https://github.com/Exploratorium/vite-plugin-drupal-interface-translations"
+  },
+  "homepage": "https://github.com/Exploratorium/vite-plugin-drupal-interface-translations#readme",
+  "keywords": [
+    "vite",
+    "vite-plugin",
+    "drupal"
+  ],
   "private": false,
   "version": "1.0.9",
   "publishConfig": {
