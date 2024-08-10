@@ -30,7 +30,7 @@
     "drupal"
   ],
   "private": false,
-  "version": "1.0.10",
+  "version": "1.0.11",
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
   },
