@@ -43,6 +43,8 @@ jobs:
       - run: npm ci
       - run: |
           npm version patch
+          git config user.email "webmaster@exploratorium.edu"
+          git config user.name "the Exploratorium"
           git push --follow-tags
       - run: npm publish
         env:
