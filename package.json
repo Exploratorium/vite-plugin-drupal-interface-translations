@@ -2,7 +2,7 @@
   "main": "index.js",
   "name": "vite-plugin-drupal-interface-translations",
   "private": false,
-  "version": "1.0.8",
+  "version": "1.0.9",
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
   },
