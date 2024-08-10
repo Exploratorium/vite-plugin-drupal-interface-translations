@@ -2,7 +2,10 @@
   "main": "index.js",
   "name": "rollup-plugin-drupal-interface-translations",
   "private": false,
-  "version": "1.0.4",
+  "version": "1.0.6",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
   "type": "module",
   "license": "MIT",
   "scripts": {
@@ -12,18 +15,17 @@
     "prettier:fix": "prettier --write .",
     "test": "echo '@TODO: create unit tests'"
   },
+  "dependencies": {
+    "estree-walker": "^3.0.3",
+    "lodash": "^4.17.21",
+    "source-map": "^0.7.4"
+  },
   "devDependencies": {
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-unused-imports": "^3.2.0",
-    "prettier": "^3.3.3",
-    "vite": "^5.3.4"
-  },
-  "dependencies": {
-    "estree-walker": "^3.0.3",
-    "lodash": "^4.17.21",
-    "source-map": "^0.7.4"
+    "prettier": "^3.3.3"
   }
 }

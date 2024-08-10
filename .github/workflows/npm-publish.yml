@@ -66,6 +66,6 @@ jobs:
           npm version patch
           git push --follow-tags
       - name: Publish to NPM
-        run: npm publish --provenance --access public
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
