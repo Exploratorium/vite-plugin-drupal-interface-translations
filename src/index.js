@@ -5,9 +5,11 @@ import { createFilter } from '@rollup/pluginutils';
 import { walk } from 'estree-walker';
 import { SourceMapConsumer } from 'source-map';
 
+const DRUPAL_FUNCTIONS = ['Drupal.t', 'Drupal.formatPlural'];
+
 // eslint-disable-next-line no-undef
-const cwd = process.cwd();
-const module = basename(cwd);
+const CURRENT_WORKING_DIRECTORY = process.cwd();
+const MODULE_NAME = basename(CURRENT_WORKING_DIRECTORY);
 
 function getName(node) {
   if (node.type === 'Identifier') return node.name;
@@ -92,14 +94,21 @@ function addLoc(msg, expression, code) {
   msg.references.push(reference);
 }
 
-export const vitePluginDrupalInterfaceTranslations = (
-  { include, exclude, functions, output } = {
-    functions: ['Drupal.t', 'Drupal.formatPlural'],
-    output: `translations/${module}.pot`,
-    path: 'translations',
+const rollupPluginDrupalInterfaceTranslations = (
+  { filterOptions, output } = {
+    filterOptions: {
+      include: undefined,
+      exclude: undefined,
+      options: undefined,
+    },
+    output: `translations/${MODULE_NAME}.pot`,
   },
 ) => {
-  const filter = createFilter(include, exclude, { resolve: true });
+  const filter = createFilter(
+    filterOptions?.include,
+    filterOptions?.exclude,
+    filterOptions?.options,
+  );
 
   const msgs = {};
   const sources = {};
@@ -116,6 +125,7 @@ export const vitePluginDrupalInterfaceTranslations = (
     }
     return msgs[key];
   }
+
   function extractFormatString(expression, code) {
     const msgId = expression.arguments[0]?.value;
     const msgCtxt = expression.arguments[2]?.properties[0]?.value?.value;
@@ -135,11 +145,9 @@ export const vitePluginDrupalInterfaceTranslations = (
     return msg;
   }
 
-  const translationFunctions = functions
-    .map((keypath) =>
-      keypath.replace(/\*/g, '\\w+').replace(/\./g, '\\s*\\.\\s*'),
-    )
-    .map((keypath) => '(?:\\b\\w+\\.|)' + keypath);
+  const translationFunctions = DRUPAL_FUNCTIONS.map((keypath) =>
+    keypath.replace(/\*/g, '\\w+').replace(/\./g, '\\s*\\.\\s*'),
+  ).map((keypath) => '(?:\\b\\w+\\.|)' + keypath);
   const reFunctions = new RegExp(`^(?:${translationFunctions.join('|')})$`);
   const UNCHANGED = null;
 
@@ -173,7 +181,7 @@ export const vitePluginDrupalInterfaceTranslations = (
               }
               Object.values(msg.references).forEach((ref) => {
                 ref.path = id;
-                ref.relativePath = relative(cwd, id);
+                ref.relativePath = relative(CURRENT_WORKING_DIRECTORY, id);
               });
 
               this.skip();
@@ -213,4 +221,4 @@ export const vitePluginDrupalInterfaceTranslations = (
   };
 };
 
-export default vitePluginDrupalInterfaceTranslations;
+export default rollupPluginDrupalInterfaceTranslations;

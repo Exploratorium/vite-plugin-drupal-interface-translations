@@ -9,11 +9,17 @@
   <body>
     <div id="app"></div>
 
-    <!-- From Drupal 10.3 -->
-    <script src="https://git.drupalcode.org/project/drupal/-/raw/10.3.x/core/misc/drupal.js"></script>
-    <script src="https://git.drupalcode.org/project/drupal/-/raw/10.3.x/core/misc/drupal.init.js"></script>
-    <script src="https://git.drupalcode.org/project/drupal/-/raw/10.3.x/core/misc/drupalSettingsLoader.js"></script>
+    <script language="JavaScript">
+      window.drupalSettings = {
+        pluralDelimiter: '\x03',
+      };
+    </script>
 
-    <script type="module" src="/main.js"></script>
+    <!-- From Drupal 10.3 https://git.drupalcode.org/project/drupal/-/raw/10.3.x -->
+    <script src="/core/misc/drupal.js"></script>
+    <script src="/core/misc/drupal.init.js"></script>
+    <script src="/core/misc/drupalSettingsLoader.js"></script>
+
+    <script src="/main.js" defer="defer" type="module"></script>
   </body>
 </html>
