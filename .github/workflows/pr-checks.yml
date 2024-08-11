@@ -10,7 +10,6 @@ on:
 
 jobs:
   test-project:
-    name: Run unit tests for the project.
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code.
