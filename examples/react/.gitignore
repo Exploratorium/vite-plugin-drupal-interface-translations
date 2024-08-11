@@ -24,3 +24,4 @@ dist-ssr
 *.sw?
 
 /translations
+/js/public/core

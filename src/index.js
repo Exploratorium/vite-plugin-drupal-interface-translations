@@ -1,10 +1,15 @@
-import { mkdirSync, writeFileSync } from 'node:fs';
-import { basename, join, relative } from 'node:path';
+import { mkdir, writeFile } from 'node:fs/promises';
+import { basename, dirname, relative } from 'node:path';
 
+import { createFilter } from '@rollup/pluginutils';
 import { walk } from 'estree-walker';
-import _ from 'lodash';
 import { SourceMapConsumer } from 'source-map';
-import { createFilter } from 'vite';
+
+const DRUPAL_FUNCTIONS = ['Drupal.t', 'Drupal.formatPlural'];
+
+// eslint-disable-next-line no-undef
+const CURRENT_WORKING_DIRECTORY = process.cwd();
+const MODULE_NAME = basename(CURRENT_WORKING_DIRECTORY);
 
 function getName(node) {
   if (node.type === 'Identifier') return node.name;
@@ -34,23 +39,23 @@ function flatten(node) {
 
 function generateKey(msgId, msgIdPlural, msgCtxt) {
   const messageIdPart = JSON.stringify({ msgId, msgIdPlural });
-  const messageContextPart = !_.isNil(msgCtxt) ? JSON.stringify(msgCtxt) : '';
+  const messageContextPart = msgCtxt ? JSON.stringify(msgCtxt) : '';
   return `msgid<${messageIdPart}>;msgctxt<${messageContextPart}>`;
 }
 
 function getGetTextTemplate({ msgId, msgIdPlural, msgCtxt, references }) {
   const template = [];
-  if (!_.isEmpty(references)) {
+  if (Object.keys(references).length > 0) {
     const iteratee = ({ relativePath, line, column }) =>
       `${relativePath}:${line}:${column + 1}`;
-    const allReferences = _.join(_.map(references, iteratee), ' ');
+    const allReferences = Object.values(references).map(iteratee).join(' ');
     template.push(`#: ${allReferences}`);
   }
-  if (!_.isNil(msgCtxt)) {
+  if (msgCtxt) {
     template.push(`msgctxt ${JSON.stringify(msgCtxt)}`);
   }
   template.push(`msgid ${JSON.stringify(msgId)}`);
-  if (!_.isNil(msgIdPlural)) {
+  if (msgIdPlural) {
     template.push(`msgid_plural ${JSON.stringify(msgIdPlural)}`);
     template.push('msgstr[0] ""');
     template.push('msgstr[1] ""');
@@ -74,9 +79,14 @@ function addLoc(msg, expression, code) {
   const lastLine = splitLines[line - 1];
   const column = lastLine.length;
 
-  const loc = _.pick(expression, 'start', 'end');
-  _.set(loc, 'start.line', line);
-  _.set(loc, 'start.column', column);
+  const loc = {
+    start: {
+      ...expression.start,
+      line,
+      column,
+    },
+    end: expression.end,
+  };
 
   const reference = {
     loc,
@@ -84,22 +94,28 @@ function addLoc(msg, expression, code) {
   msg.references.push(reference);
 }
 
-const vitePluginDrupalInterfaceTranslations = (options = {}) => {
-  // eslint-disable-next-line no-undef
-  const cwd = process.cwd();
-
-  const output = _.get(options, 'output', `${basename(cwd)}.pot`);
-  const include = _.get(options, 'include', cwd + '/**/*.{jsx,js}');
-  const { exclude } = options;
-
-  const filter = createFilter(include, exclude);
+const drupalInterfaceTranslations = (
+  { filterOptions, output } = {
+    filterOptions: {
+      include: undefined,
+      exclude: undefined,
+      options: undefined,
+    },
+    output: `translations/${MODULE_NAME}.pot`,
+  },
+) => {
+  const filter = createFilter(
+    filterOptions?.include,
+    filterOptions?.exclude,
+    filterOptions?.options,
+  );
 
   const msgs = {};
   const sources = {};
 
   function getOrCreate(msgId, msgCtxt, msgIdPlural = undefined) {
     const key = generateKey(msgId, msgIdPlural, msgCtxt);
-    if (!_.has(msgs, key)) {
+    if (!Object.hasOwn(msgs, key)) {
       msgs[key] = {
         msgId,
         msgCtxt,
@@ -109,9 +125,10 @@ const vitePluginDrupalInterfaceTranslations = (options = {}) => {
     }
     return msgs[key];
   }
+
   function extractFormatString(expression, code) {
-    const msgId = _.get(expression, 'arguments.0.value');
-    const msgCtxt = _.get(expression, 'arguments.2.properties.0.value.value');
+    const msgId = expression.arguments[0]?.value;
+    const msgCtxt = expression.arguments[2]?.properties[0]?.value?.value;
     const msg = getOrCreate(msgId, null, msgCtxt);
     addLoc(msg, expression, code);
 
@@ -119,21 +136,19 @@ const vitePluginDrupalInterfaceTranslations = (options = {}) => {
   }
 
   function extractFormatPlural(expression, code) {
-    const msgId = _.get(expression, 'arguments.1.value');
-    const msgIdPlural = _.get(expression, 'arguments.2.value');
-    const msgCtxt = _.get(expression, 'arguments.4.properties.0.value.value');
+    const msgId = expression.arguments[1]?.value;
+    const msgIdPlural = expression.arguments[2]?.value;
+    const msgCtxt = expression.arguments[4]?.properties[0]?.value?.value;
     const msg = getOrCreate(msgId, msgCtxt, msgIdPlural);
     addLoc(msg, expression, code);
 
     return msg;
   }
 
-  const functions = (options.functions || ['Drupal.t', 'Drupal.formatPlural'])
-    .map((keypath) =>
-      keypath.replace(/\*/g, '\\w+').replace(/\./g, '\\s*\\.\\s*'),
-    )
-    .map((keypath) => '(?:\\b\\w+\\.|)' + keypath);
-  const reFunctions = new RegExp(`^(?:${functions.join('|')})$`);
+  const translationFunctions = DRUPAL_FUNCTIONS.map((keypath) =>
+    keypath.replace(/\*/g, '\\w+').replace(/\./g, '\\s*\\.\\s*'),
+  ).map((keypath) => '(?:\\b\\w+\\.|)' + keypath);
+  const reFunctions = new RegExp(`^(?:${translationFunctions.join('|')})$`);
   const UNCHANGED = null;
 
   return {
@@ -164,9 +179,9 @@ const vitePluginDrupalInterfaceTranslations = (options = {}) => {
               } else {
                 msg = extractFormatString(node, code);
               }
-              _.each(msg.references, (ref) => {
+              Object.values(msg.references).forEach((ref) => {
                 ref.path = id;
-                ref.relativePath = relative(cwd, id);
+                ref.relativePath = relative(CURRENT_WORKING_DIRECTORY, id);
               });
 
               this.skip();
@@ -178,8 +193,9 @@ const vitePluginDrupalInterfaceTranslations = (options = {}) => {
       return UNCHANGED;
     },
     async generateBundle() {
-      const promises = _.map(msgs, async (msg) => {
-        const promises = _.map(msg.references, async (ref) => {
+      const msgValues = Object.values(msgs);
+      const promises = msgValues.map(async (msg) => {
+        const promises = Object.values(msg.references).map(async (ref) => {
           const source = sources[ref.path];
 
           const start = ref.loc.start;
@@ -188,20 +204,21 @@ const vitePluginDrupalInterfaceTranslations = (options = {}) => {
             return consumer.originalPositionFor(start);
           });
 
-          _.merge(ref, _.pick(pos, 'line', 'column'));
+          ref.line = pos.line || ref.line;
+          ref.column = pos.column || ref.column;
         });
         return Promise.all(promises);
       });
 
       await Promise.all(promises);
 
-      const msgsAsString = _.map(msgs, getGetTextTemplate);
+      const msgsAsString = msgValues.map(getGetTextTemplate);
       const potContent = potFileOutput(msgsAsString);
 
-      mkdirSync(join(cwd, 'translations'), { recursive: true });
-      writeFileSync(join(cwd, 'translations', output), potContent);
+      await mkdir(dirname(output), { recursive: true });
+      await writeFile(output, potContent);
     },
   };
 };
 
-export default vitePluginDrupalInterfaceTranslations;
+export default drupalInterfaceTranslations;

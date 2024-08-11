@@ -4,12 +4,17 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "fetch:drupal.js": "curl -o js/public/core/misc/drupal.js 'https://git.drupalcode.org/project/drupal/-/raw/10.3.x/core/misc/drupal.js'",
+    "fetch:drupal.init.js": "curl -o js/public/core/misc/drupal.init.js 'https://git.drupalcode.org/project/drupal/-/raw/10.3.x/core/misc/drupal.init.js'",
+    "fetch:drupalSettingsLoader.js": "curl -o js/public/core/misc/drupalSettingsLoader.js 'https://git.drupalcode.org/project/drupal/-/raw/10.3.x/core/misc/drupal.init.js'",
+    "predev": "mkdir -p js/public/core/misc; npm run fetch:drupal.js; npm run fetch:drupal.init.js; npm run fetch:drupalSettingsLoader.js",
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "echo '@TODO: create unit tests'"
   },
   "devDependencies": {
-    "vite": "^5.3.4",
-    "vite-plugin-drupal-interface-translations": "../.."
+    "rollup-plugin-drupal-interface-translations": "../..",
+    "vite": "^5.3.4"
   }
 }

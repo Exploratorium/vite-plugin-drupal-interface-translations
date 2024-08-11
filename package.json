@@ -1,6 +1,11 @@
 {
-  "main": "index.js",
-  "name": "vite-plugin-drupal-interface-translations",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "exports": {
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.cjs"
+  },
+  "name": "rollup-plugin-drupal-interface-translations",
   "author": {
     "name": "the Exploratorium",
     "email": "webmaster@exploratorium.edu",
@@ -18,13 +23,15 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Exploratorium/vite-plugin-drupal-interface-translations"
+    "url": "git+https://github.com/Exploratorium/rollup-plugin-drupal-interface-translations"
   },
   "bugs": {
-    "url": "https://github.com/Exploratorium/vite-plugin-drupal-interface-translations"
+    "url": "https://github.com/Exploratorium/rollup-plugin-drupal-interface-translations"
   },
-  "homepage": "https://github.com/Exploratorium/vite-plugin-drupal-interface-translations#readme",
+  "homepage": "https://github.com/Exploratorium/rollup-plugin-drupal-interface-translations#readme",
   "keywords": [
+    "rollup",
+    "rollup-plugin",
     "vite",
     "vite-plugin",
     "drupal"
@@ -37,6 +44,8 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
+    "build": "rollup -c",
+    "build:dev": "rollup -c --sourcemap",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint --fix .",
     "prettier": "prettier .",
@@ -44,17 +53,19 @@
     "test": "echo '@TODO: create unit tests'"
   },
   "dependencies": {
-    "estree-walker": "^3.0.3",
-    "lodash": "^4.17.21",
     "source-map": "^0.7.4"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/pluginutils": "^5.1.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-unused-imports": "^3.2.0",
+    "estree-walker": "^3.0.3",
     "prettier": "^3.3.3",
-    "vite": "^5.4.0"
+    "rollup": "^4.20.0"
   }
 }
