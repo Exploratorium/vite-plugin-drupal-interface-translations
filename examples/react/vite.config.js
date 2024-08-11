@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import rollupPluginDrupalInterfaceTranslations from 'rollup-plugin-drupal-interface-translations';
+import drupalInterfaceTranslations from 'rollup-plugin-drupal-interface-translations';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -9,7 +9,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: 'js/src/main.jsx',
-      plugins: [rollupPluginDrupalInterfaceTranslations()],
+      plugins: [drupalInterfaceTranslations()],
     },
   },
 });

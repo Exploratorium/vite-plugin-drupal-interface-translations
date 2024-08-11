@@ -13,12 +13,12 @@ npm install --save-dev rollup-plugin-drupal-interface-translations
 ## Usage
 
 ```javascript
-import rollupPluginDrupalInterfaceTranslations from 'rollup-plugin-drupal-interface-translations';
+import drupalInterfaceTranslations from 'rollup-plugin-drupal-interface-translations';
 
 // https://rollupjs.org/configuration-options/
 export default {
   input: 'main.js',
-  plugins: [rollupPluginDrupalInterfaceTranslations()],
+  plugins: [drupalInterfaceTranslations()],
 };
 ```
 
@@ -26,14 +26,14 @@ This plugin can be used with [Vite](https://vitejs.dev).
 
 ```javascript
 import { defineConfig } from 'vite';
-import rollupPluginDrupalInterfaceTranslations from 'rollup-plugin-drupal-interface-translations';
+import drupalInterfaceTranslations from 'rollup-plugin-drupal-interface-translations';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {
     rollupOptions: {
       input: 'main.js',
-      plugins: [rollupPluginDrupalInterfaceTranslations()],
+      plugins: [drupalInterfaceTranslations()],
     },
   },
 });

@@ -94,7 +94,7 @@ function addLoc(msg, expression, code) {
   msg.references.push(reference);
 }
 
-const rollupPluginDrupalInterfaceTranslations = (
+const drupalInterfaceTranslations = (
   { filterOptions, output } = {
     filterOptions: {
       include: undefined,
@@ -221,4 +221,4 @@ const rollupPluginDrupalInterfaceTranslations = (
   };
 };
 
-export default rollupPluginDrupalInterfaceTranslations;
+export default drupalInterfaceTranslations;

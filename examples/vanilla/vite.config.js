@@ -1,5 +1,5 @@
+import drupalInterfaceTranslations from 'rollup-plugin-drupal-interface-translations';
 import { defineConfig } from 'vite';
-import rollupPluginDrupalInterfaceTranslations from 'rollup-plugin-drupal-interface-translations';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -11,7 +11,7 @@ export default defineConfig({
         entryFileNames: '[name].js',
         assetFileNames: '[name].[ext]',
       },
-      plugins: [rollupPluginDrupalInterfaceTranslations()],
+      plugins: [drupalInterfaceTranslations()],
     },
   },
 });
