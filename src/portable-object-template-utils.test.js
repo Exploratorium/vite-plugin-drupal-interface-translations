@@ -1,3 +1,5 @@
+import { describe, expect, test } from '@jest/globals';
+
 import { generatePotFile } from './portable-object-template-utils.js';
 
 describe('portable object template (POT) file utils', () => {

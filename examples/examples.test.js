@@ -1,7 +1,7 @@
 import { exec } from 'node:child_process';
 import { readFile, rm, stat } from 'node:fs/promises';
 
-import { beforeAll, describe, expect, test } from 'jest';
+import { beforeAll, beforeEach, describe, expect, test } from '@jest/globals';
 
 describe('examples', () => {
   beforeAll(async () => {
