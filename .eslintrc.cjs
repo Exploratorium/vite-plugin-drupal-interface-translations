@@ -7,7 +7,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['src/**/*.test.js'],
+      files: ['src/**/*.test.js', 'examples/**/*.test.js'],
       plugins: ['jest'],
       env: {
         'jest/globals': true,
