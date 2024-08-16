@@ -4,6 +4,8 @@ This is a [Rollup](https://rollupjs.org) plugin that helps you to
 [translation strings in JavaScript](https://www.drupal.org/docs/8/api/translation-api/overview#s-translation-in-javascript-files)
 that are used in [Drupal](https://www.drupal.org) websites.
 
+Based on [DrupalTranslationsWebpackPlugin](https://github.com/dulnan/drupal-translations-webpack-plugin).
+
 ## Installation
 
 ```shell

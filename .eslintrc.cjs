@@ -5,6 +5,15 @@ module.exports = {
   globals: {
     Drupal: true,
   },
+  overrides: [
+    {
+      files: ['src/**/*.test.js', 'examples/**/*.test.js'],
+      plugins: ['jest'],
+      env: {
+        'jest/globals': true,
+      },
+    },
+  ],
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
   plugins: ['simple-import-sort', 'unused-imports'],
   rules: {
