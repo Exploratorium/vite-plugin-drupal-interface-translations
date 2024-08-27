@@ -19,7 +19,6 @@ const drupalInterfaceTranslations = (
       exclude: undefined,
       options: undefined,
     },
-    output: `translations/${MODULE_NAME}.pot`,
   },
 ) => {
   const filter = createFilter(
@@ -73,8 +72,8 @@ const drupalInterfaceTranslations = (
             return consumer.originalPositionFor(start);
           });
 
-          ref.line = pos.line || ref.line;
-          ref.column = pos.column || ref.column;
+          ref.line = typeof pos.line === 'number' ? pos.line : ref.line;
+          ref.column = typeof pos.column === 'number' ? pos.column : ref.column;
         });
         return Promise.all(refPromises);
       });
@@ -83,8 +82,9 @@ const drupalInterfaceTranslations = (
 
       const potContent = generatePotFile(msgValues);
 
-      await mkdir(dirname(output), { recursive: true });
-      await writeFile(output, potContent);
+      const outputPath = output || `translations/${MODULE_NAME}.pot`;
+      await mkdir(dirname(outputPath), { recursive: true });
+      await writeFile(outputPath, potContent);
     },
   };
 };

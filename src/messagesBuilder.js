@@ -102,10 +102,20 @@ export default class MessagesBuilder {
   }
 
   // private
+  #contextReducer(prev, curr) {
+    if (curr.key.name === 'context' && curr.value.type === 'Literal') {
+      return curr.value.value;
+    }
+    return prev;
+  }
+
   #extractT(id, expression, code) {
     const msgId = expression.arguments[0]?.value;
-    const msgCtxt = expression.arguments[2]?.properties[0]?.value?.value;
-    const msg = this.#getOrCreate(msgId, null, msgCtxt);
+
+    const properties = expression.arguments[2]?.properties;
+    const msgCtxt = properties?.reduce(this.#contextReducer, undefined);
+
+    const msg = this.#getOrCreate(msgId, msgCtxt, null);
     addLoc(msg, expression, code);
 
     this.#assignReferences(id, msg);
@@ -115,8 +125,12 @@ export default class MessagesBuilder {
 
   #extractFormatPlural(id, expression, code) {
     const msgId = expression.arguments[1]?.value;
+
     const msgIdPlural = expression.arguments[2]?.value;
-    const msgCtxt = expression.arguments[4]?.properties[0]?.value?.value;
+
+    const properties = expression.arguments[4]?.properties;
+    const msgCtxt = properties?.reduce(this.#contextReducer, undefined);
+
     const msg = this.#getOrCreate(msgId, msgCtxt, msgIdPlural);
     addLoc(msg, expression, code);
 
