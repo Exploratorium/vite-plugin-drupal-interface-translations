@@ -53,7 +53,7 @@
     "test": "NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" jest --config jest.config.cjs"
   },
   "dependencies": {
-    "source-map": "^0.7.6"
+    "source-map": "^0.8.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
